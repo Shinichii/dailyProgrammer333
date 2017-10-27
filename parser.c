@@ -1,5 +1,17 @@
 #include "parser.h"
-
+void sort_by_message_id(packet * array_parsed, int number_of_lines)
+{
+	qsort(array_parsed, number_of_lines, sizeof(packet), compare_by_message_id);	
+}
+int compare_by_message_id(const void *a, const void *b)
+{
+	const struct packet *c = a;
+	const struct packet *d = b;
+	if(c->messageID == d->messageID)
+		return c->packetID - d->packetID;
+	else
+		return (c->messageID - d->messageID);
+}
 int parse_input_file(FILE* input_file,packet * array_parsed)
 {
 	array_parsed = NULL;
@@ -32,6 +44,7 @@ int parse_input_file(FILE* input_file,packet * array_parsed)
 		getline(&buffer, &buffer_used, input_file);
 		array_parsed[i] = parseLine(buffer);
 	}
+	sort_by_message_id(array_parsed, number_of_lines);
 	show_array(array_parsed, number_of_lines);
 	return number_of_lines;
 }

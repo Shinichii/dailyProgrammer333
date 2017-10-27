@@ -9,6 +9,8 @@ typedef struct packet
 	int numberOfPackets;
 	char* message;
 }packet;
+void sort_by_message_id(packet * array_parsed, int number_of_lines);
+int compare_by_message_id(const void *a, const void *b);
 void show_packet(packet p);
 void show_array(packet* packet_array, int array_size);
 packet parseLine(char* buffer);
